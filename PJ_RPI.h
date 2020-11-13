@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 // Define which Raspberry Pi board are you using
-#define RPI2
+#define RPI4
 
 #ifdef RPI
 #define BCM2708_PERI_BASE       0x20000000
