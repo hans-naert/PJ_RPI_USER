@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project (PJ_RPI)
+project (PJ_RPI_USER)
 
-add_library(PJ_RPI PJ_RPI.c)
+add_library(PJ_RPI_USER PJ_RPI_USER.c)
 
-install (TARGETS PJ_RPI DESTINATION lib)
+install (TARGETS PJ_RPI_USER DESTINATION lib)
 
-install (FILES PJ_RPI.h DESTINATION include)
+install (FILES PJ_RPI_USER.h DESTINATION include)
 
