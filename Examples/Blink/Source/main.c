@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdarg.h>
+#include "tlpi_hdr.h"
 
 void sigalrm_handler(int signum)
 {
@@ -53,19 +54,23 @@ int main(int argc, char *argv[])
 	INP_GPIO(17);
 	OUT_GPIO(17);
 
-	sigemptyset(&sa.sa_mask);
+	if(sigemptyset(&sa.sa_mask) == -1) {
+		errExit("sigemptyset");
+	}
 	sa.sa_handler = sigalrm_handler;
 	sa.sa_flags = 0;
-	sigaction(SIGALRM, &sa, NULL);	
+	if(sigaction(SIGALRM, &sa, NULL) == -1) {
+		errExit("sigaction");
+	}
 
 	itv.it_value.tv_sec = 3;
 	itv.it_value.tv_usec = 0;
 	itv.it_interval.tv_sec = 3;
 	itv.it_interval.tv_usec = 0;
 
-	setitimer(ITIMER_REAL, &itv, NULL);
-
-
+	if(setitimer(ITIMER_REAL, &itv, NULL) == -1) {
+		errExit("setitimer");
+	}
 
 	while(1)
 	{

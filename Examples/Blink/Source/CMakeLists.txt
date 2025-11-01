@@ -3,4 +3,4 @@ project(Blink)
 
 add_executable(Blink main.c)
 
-target_link_libraries(Blink PJ_RPI_USER)
+target_link_libraries(Blink PJ_RPI_USER libtlpi.a)
