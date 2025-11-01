@@ -35,6 +35,29 @@ int argv_demo(int a, ...)
 	return 0;
 }
 
+int init_timer(int count, ...)
+{
+	struct itimerval itv;
+	// Initialize timer values
+	itv.it_value.tv_sec = 3;
+	itv.it_value.tv_usec = 0;
+	itv.it_interval.tv_sec = 3;
+	itv.it_interval.tv_usec = 0;
+
+	va_list args;
+	va_start(args, count);
+
+	if(count > 0) {itv.it_value.tv_sec = va_arg(args, int);	}
+	if(count > 1) {itv.it_value.tv_usec = va_arg(args, int);}
+	if(count > 2) {itv.it_interval.tv_sec = va_arg(args, int);}
+	if(count > 3) {itv.it_interval.tv_usec = va_arg(args, int);}
+
+	va_end(args);
+
+	if(setitimer(ITIMER_REAL, &itv, NULL) == -1) { 	errExit("setitimer");}
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -63,15 +86,10 @@ int main(int argc, char *argv[])
 		errExit("sigaction");
 	}
 
-	itv.it_value.tv_sec = 3;
-	itv.it_value.tv_usec = 0;
-	itv.it_interval.tv_sec = 3;
-	itv.it_interval.tv_usec = 0;
 
-	if(setitimer(ITIMER_REAL, &itv, NULL) == -1) {
-		errExit("setitimer");
-	}
+	init_timer(2, 5, 0); // na 2 seconden, 1 sec interval timer
 
+	
 	while(1)
 	{
 		// Toggle 17 (blink a led!)
